@@ -1,3 +1,6 @@
+import sys
+
+
 def arithmetic_arranger(problems, val=False):
     arranged_problems = ''
     if len(problems) > 5:
@@ -50,10 +53,25 @@ def arithmetic_arranger(problems, val=False):
         arranged_problems = '\n'.join((top_row, bottom_row, dashes))
     return arranged_problems
 
-    from arithmetic_arranger import arithmetic_arranger
-    from unittest import main
+
+arguments = sys.argv
+
+if len(arguments) < 3:
+    print("Missing arguments, insert missing options")
+    sys.exit(1)
+
+if arguments[1] != '--problems':
+    print('Argument "--problems" is required input for the script')
+    sys.exit(1)
+
+problems_split = arguments[2].split(';')
+
+if arguments[3] = '--val' and arguments[4] = True:
+    print(arithmetic_arranger(problems_split, val=True))
+
+print(arithmetic_arranger(problems_split))
 
 
 # Examples
-print(arithmetic_arranger(["3 + 855", "988 + 40"], True))
-print(arithmetic_arranger(["3 / 855", "3801 - 2", "45 + 43", "123 + 49"]))
+# print(arithmetic_arranger(["3 + 855", "988 + 40"], True))
+# print(arithmetic_arranger(["3 / 855", "3801 - 2", "45 + 43", "123 + 49"]))

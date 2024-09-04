@@ -1,9 +1,10 @@
 import re
 import secrets
 import string
+import sys
 
 
-def generate_password(length=16, nums=1, special_chars=1, uppercase=1, lowercase=1):
+def generate_password(length, nums=1, special_chars=1, uppercase=1, lowercase=1):
 
     # Define the possible characters for the password
     letters = string.ascii_letters
@@ -36,5 +37,8 @@ def generate_password(length=16, nums=1, special_chars=1, uppercase=1, lowercase
     return password
 
 
-new_password = generate_password()
+arguments = sys.argv
+
+new_password = generate_password(int(arguments[2]))
+print(arguments)
 print('Generated password:', new_password)
