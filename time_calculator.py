@@ -1,61 +1,63 @@
+"""Importing sys modulw"""
 import sys
 
 
 def add_time(start, duration, day=None):
+    """Function which handles time calculation ⏲"""
     week = ['Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday', 'Sunday']
 
   # Start part
     [hour_minute_part, suffix_part] = start.split(' ')
-    [hourString, minuteString] = hour_minute_part.split(':')
+    [hour_string, minute_string] = hour_minute_part.split(':')
 
-    hourInt = int(hourString)
-    minuteInt = int(minuteString)
+    hour_int = int(hour_string)
+    minute_int = int(minute_string)
     if suffix_part == 'PM':
-        if hourInt != 12:
-            hourInt += 12
+        if hour_int != 12:
+            hour_int += 12
     else:
-        if hourInt == 12:
-            hourInt = 0
+        if hour_int == 12:
+            hour_int = 0
 
-    start_in_minutes = (hourInt * 60) + minuteInt
+    start_in_minutes = (hour_int * 60) + minute_int
     next_day_leap_minutes = (24 * 60) - start_in_minutes
 
     # Duration part
-    [durHourString, durMinuteString] = duration.split(':')
+    [duration_hour_string, duration_minute_string] = duration.split(':')
 
-    durHourInt = int(durHourString)
-    durMinuteInt = int(durMinuteString)
-    dur_in_minutes = (durHourInt * 60) + durMinuteInt
+    duration_hour_int = int(duration_hour_string)
+    duration_minute_int = int(duration_minute_string)
+    dur_in_minutes = (duration_hour_int * 60) + duration_minute_int
 
     days_later = 0
 
     if dur_in_minutes > next_day_leap_minutes:
-        minutes_total = (dur_in_minutes - next_day_leap_minutes)
+        minutes_total = dur_in_minutes - next_day_leap_minutes
 
         days_later = (minutes_total//1440) + 1
-        minutes_later = (minutes_total % 1440)
-        minuteInt = minutes_later % 60
-        hourInt = minutes_later // 60
+        minutes_later = minutes_total % 1440
+        minute_int = minutes_later % 60
+        hour_int = minutes_later // 60
     else:
-        hourInt += durHourInt
-        minuteInt += durMinuteInt
-        diff_hour_minutes = minuteInt - 60
+        hour_int += duration_hour_int
+        minute_int += duration_minute_int
+        diff_hour_minutes = minute_int - 60
         if diff_hour_minutes >= 0:
-            hourInt += 1
-            minuteInt = diff_hour_minutes
+            hour_int += 1
+            minute_int = diff_hour_minutes
 
-    if hourInt >= 12:
+    if hour_int >= 12:
         suffix_part = 'PM'
-        if hourInt != 12:
-            hourInt -= 12
+        if hour_int != 12:
+            hour_int -= 12
     else:
         suffix_part = 'AM'
-        if hourInt == 0:
-            hourInt = 12
+        if hour_int == 0:
+            hour_int = 12
 
-    final_date = str(hourInt)+':'+str(minuteInt).rjust(2,
-                                                       '0') + ' ' + suffix_part
+    final_date = str(hour_int)+':'+str(minute_int).rjust(2,
+                                                         '0') + ' ' + suffix_part
 
     if day:
         current_day_index = week.index(day.capitalize())
@@ -77,22 +79,43 @@ def add_time(start, duration, day=None):
     return final_date
 
 
-arguments = sys.argv
+script_arguments = sys.argv
 
-if len(arguments) < 3:
-    print('Missing arguments, must insert "--start" and "--duration" arguments, "--day" is optional')
+# Remove first element of collection that usually is script
+script_arguments.pop(0)
 
-if len(arguments) == 5 and arguments[1] != '--start' or arguments[3] != '--duration':
-    print('Argument "--start" and value of start is required as input for the script')
-elif len(arguments) == 5:
-    print(add_time(arguments[2], arguments[4]))
-elif len(arguments) == 7:
-    if arguments[5] == '--day':
-        print(add_time(arguments[2], arguments[4]), arguments[6])
-elif len(arguments) == 6:
-    print('Value of "--day" missing')
+if "--start" not in script_arguments:
+    print("[ERROR] Missing argument --start")
+    sys.exit(1)
 
-# examples
-# print(add_time('8:16 PM', '466:02', 'tuesday'))
-# print(add_time('11:43 AM', '00:20'))
-# print(add_time('11:30 AM', '2:32', 'Monday'))
+start_value_index = script_arguments.index("--start") + 1
+
+if len(script_arguments) < (start_value_index + 1):
+    print("[ERROR] Argument --start value not provided")
+    sys.exit(1)
+
+start_value = script_arguments[start_value_index]
+
+if "--duration" not in script_arguments:
+    print("[ERROR] Missing argument --duration")
+    sys.exit(1)
+
+duration_value_index = script_arguments.index("--duration") + 1
+
+if len(script_arguments) < (duration_value_index + 1):
+    print("[ERROR] Argument --duration value not provided")
+    sys.exit(1)
+
+duration_value = script_arguments[duration_value_index]
+
+if "--day" in script_arguments:
+    day_value_index = script_arguments.index("--day") + 1
+    if len(script_arguments) < (day_value_index + 1):
+        print("[ERROR] Argument --day value not provided")
+        sys.exit(1)
+    else:
+        day_value = script_arguments[day_value_index]
+
+time = add_time(start_value, duration_value, day_value)
+
+print(time)
