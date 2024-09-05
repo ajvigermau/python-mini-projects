@@ -7,7 +7,7 @@ def add_time(start, duration, day=None):
     week = ['Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-  # Start part
+    # Start part
     [hour_minute_part, suffix_part] = start.split(' ')
     [hour_string, minute_string] = hour_minute_part.split(':')
 
