@@ -66,10 +66,10 @@ if arguments[1] != '--problems':
 
 problems_split = arguments[2].split(';')
 
-if arguments[3] = '--val' and arguments[4] = True:
+if arguments[3] == '--val' and arguments[4] == 'True':
     print(arithmetic_arranger(problems_split, val=True))
-
-print(arithmetic_arranger(problems_split))
+else:
+    print(arithmetic_arranger(problems_split))
 
 
 # Examples
