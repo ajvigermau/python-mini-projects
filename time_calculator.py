@@ -1,3 +1,6 @@
+import sys
+
+
 def add_time(start, duration, day=None):
     week = ['Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -74,7 +77,22 @@ def add_time(start, duration, day=None):
     return final_date
 
 
+arguments = sys.argv
+
+if len(arguments) < 3:
+    print('Missing arguments, must insert "--start" and "--duration" arguments, "--day" is optional')
+
+if len(arguments) == 5 and arguments[1] != '--start' or arguments[3] != '--duration':
+    print('Argument "--start" and value of start is required as input for the script')
+elif len(arguments) == 5:
+    print(add_time(arguments[2], arguments[4]))
+elif len(arguments) == 7:
+    if arguments[5] == '--day':
+        print(add_time(arguments[2], arguments[4]), arguments[6])
+elif len(arguments) == 6:
+    print('Value of "--day" missing')
+
 # examples
-print(add_time('8:16 PM', '466:02', 'tuesday'))
-print(add_time('11:43 AM', '00:20'))
-print(add_time('11:30 AM', '2:32', 'Monday'))
+# print(add_time('8:16 PM', '466:02', 'tuesday'))
+# print(add_time('11:43 AM', '00:20'))
+# print(add_time('11:30 AM', '2:32', 'Monday'))

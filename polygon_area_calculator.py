@@ -1,3 +1,6 @@
+import sys
+
+
 class Rectangle:
     def __init__(self, width, height):
         self.width = width
@@ -64,6 +67,9 @@ class Square (Rectangle):
             row = ('*'*(self.side) + '\n') * self.side
             return str(row)
 
+
+arguments = sys.argv
+print(arguments)
 
 # Examples
 rect = Rectangle(10, 5)

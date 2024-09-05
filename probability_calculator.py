@@ -1,5 +1,6 @@
 import copy
 import random
+import sys
 
 
 class Hat:
@@ -38,6 +39,9 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
             M += 1
     return M/N
 
+
+arguments = sys.argv
+print(arguments)
 
 # Example
 hat = Hat(black=6, red=4, green=3)
