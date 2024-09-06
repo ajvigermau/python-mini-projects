@@ -1,4 +1,4 @@
-"""Importing sys modulw"""
+"""Importing sys module"""
 import sys
 
 
@@ -108,6 +108,7 @@ if len(script_arguments) < (duration_value_index + 1):
 
 duration_value = script_arguments[duration_value_index]
 
+day_value = None
 if "--day" in script_arguments:
     day_value_index = script_arguments.index("--day") + 1
     if len(script_arguments) < (day_value_index + 1):

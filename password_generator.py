@@ -37,31 +37,65 @@ def generate_password(length, nums=1, special_chars=1, uppercase=1, lowercase=1)
     return password
 
 
-arguments = sys.argv
+script_arguments = sys.argv
+# Remove first element of collection that usually is script
+script_arguments.pop(0)
 
-if len(arguments) < 3:
-    print('Missing arguments, argument "--length" and its value must be inserted ')
+if "--length" not in script_arguments:
+    print("[ERROR] Missing argument --start")
     sys.exit(1)
 
-if arguments[1] != '--length':
-    print('Argument "--length" or value of the length is required as input for the script')
-else:
-    new_password = generate_password(int(arguments[2]))
+length_value_index = script_arguments.index("--length") + 1
 
-if len(arguments) == 5:
-    if arguments[3] == '--nums':
-        new_password = generate_password(int(arguments[2]), int(arguments[4]))
-elif len(arguments) == 7:
-    if arguments[5] == '--special_chars':
-        new_password = generate_password(int(arguments[2]), int(arguments[6]))
-elif len(arguments) == 9:
-    if arguments[7] == '--uppercase':
-        new_password = generate_password(int(arguments[2]), int(arguments[8]))
-elif len(arguments) == 11:
-    if arguments[9] == '--lowercase':
-        new_password = generate_password(int(arguments[2]), int(arguments[10]))
+if len(script_arguments) < (length_value_index + 1):
+    print("[ERROR] Argument --length value not provided")
+    sys.exit(1)
 
-if len(arguments) == 6 or len(arguments) == 8 or len(arguments) == 10 or len(arguments) == 12:
-    print('Value missing, insert the value of the argument')
+length_value = script_arguments[length_value_index]
+
+nums_value = 1
+special_chars_value = 1
+uppercase_value = 1
+lowercase_value = 1
+
+if "--nums" in script_arguments:
+    nums_value_index = script_arguments.index("--nums") + 1
+    if len(script_arguments) < (nums_value_index + 1):
+        print("[ERROR] Argument --nums value not provided")
+        sys.exit(1)
+    else:
+        nums_value = script_arguments[nums_value_index]
+
+if "--special_chars" in script_arguments:
+    special_chars_value_index = script_arguments.index("--special_chars") + 1
+    if len(script_arguments) < (special_chars_value_index + 1):
+        print("[ERROR] Argument --special_chars value not provided")
+        sys.exit(1)
+    else:
+        special_chars_value = script_arguments[special_chars_value_index]
+
+if "--uppercase" in script_arguments:
+    uppercase_value_index = script_arguments.index("--uppercase") + 1
+    if len(script_arguments) < (uppercase_value_index + 1):
+        print("[ERROR] Argument --uppercase value not provided")
+        sys.exit(1)
+    else:
+        uppercase_value = script_arguments[uppercase_value_index]
+
+if "--lowercase" in script_arguments:
+    lowercase_value_index = script_arguments.index("--lowercase") + 1
+    if len(script_arguments) < (lowercase_value_index + 1):
+        print("[ERROR] Argument --lowercase value not provided")
+        sys.exit(1)
+    else:
+        lowercase_value = script_arguments[lowercase_value_index]
+
+new_password = generate_password(
+    int(length_value),
+    int(nums_value),
+    int(special_chars_value),
+    int(uppercase_value),
+    int(lowercase_value)
+)
 
 print('Generated password:', new_password)
