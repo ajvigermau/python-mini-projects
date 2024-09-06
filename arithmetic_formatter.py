@@ -54,22 +54,35 @@ def arithmetic_arranger(problems, val=False):
     return arranged_problems
 
 
-arguments = sys.argv
+script_arguments = sys.argv
 
-if len(arguments) < 3:
-    print("Missing arguments, insert missing options")
+# Remove first element of collection that usually is script
+script_arguments.pop(0)
+
+if "--problems" not in script_arguments:
+    print("[ERROR] Missing argument --problems")
     sys.exit(1)
 
-if arguments[1] != '--problems':
-    print('Argument "--problems" is required input for the script')
+problems_value_index = script_arguments.index("--problems") + 1
+
+if len(script_arguments) < (problems_value_index + 1):
+    print("[ERROR] Argument --problems value not provided")
     sys.exit(1)
 
-problems_split = arguments[2].split(';')
+problems_value = (script_arguments[problems_value_index]).split(';')
 
-if arguments[3] == '--val' and arguments[4] == 'True':
-    print(arithmetic_arranger(problems_split, val=True))
-else:
-    print(arithmetic_arranger(problems_split))
+val_value = False
+if "--val" in script_arguments:
+    val_value_index = script_arguments.index("--val") + 1
+    if len(script_arguments) < (val_value_index + 1):
+        print("[ERROR] Argument --val value not provided")
+        sys.exit(1)
+    else:
+        val_value = script_arguments[val_value_index]
+
+arranger = arithmetic_arranger(problems_value, val_value)
+
+print(arranger)
 
 
 # Examples
